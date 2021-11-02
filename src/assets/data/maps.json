@@ -1,0 +1,161 @@
+{
+    "rooms": [
+        {
+            "name": "demoRoom",
+            "lowerSrc": "assets/images/maps/DemoLower.png",
+            "upperSrc": "assets/images/maps/DemoUpper.png",
+            "gameObjects": [
+                {
+                    "name": "hero",
+                    "type": "person",
+                    "src": "assets/images/characters/people/hero.png",
+                    "isPlayerControlled": true,
+                    "x": 5,
+                    "y": 6
+                },
+                {
+                    "name": "npc1",
+                    "type": "person",
+                    "src": "assets/images/characters/people/npc1.png",
+                    "x": 7,
+                    "y": 9,
+                    "behaviorLoop": [
+                        {
+                            "type": "stand",
+                            "direction": "left",
+                            "time": 800
+                        },
+                        {
+                            "type": "stand",
+                            "direction": "up",
+                            "time": 800
+                        },
+                        {
+                            "type": "stand",
+                            "direction": "right",
+                            "time": 1200
+                        },
+                        {
+                            "type": "stand",
+                            "direction": "down",
+                            "time": 300
+                        }
+                    ],
+                    "talking": [
+                        {
+                            "events": [
+                                {
+                                    "type": "textMessage",
+                                    "text": "Im busy...",
+                                    "faceHero": "npc1"
+                                },
+                                {
+                                    "type": "textMessage",
+                                    "text": "Go away!"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "npc2",
+                    "type": "person",
+                    "src": "assets/images/characters/people/npc2.png",
+                    "x": 8,
+                    "y": 5
+                }
+            ],
+            "walls": {
+                "7,6": true,
+                "8,6": true,
+                "7,7": true,
+                "8,7": true
+            },
+            "cutsceneSpaces": {
+                "7,4": [
+                    {
+                        "events": [
+                            {
+                                "who": "npc2",
+                                "type": "walk",
+                                "direction": "left"
+                            },
+                            {
+                                "who": "npc2",
+                                "type": "stand",
+                                "direction": "up",
+                                "time": 500
+                            },
+                            {
+                                "type": "textMessage",
+                                "text": "Hey!!!"
+                            },
+                            {
+                                "type": "textMessage",
+                                "text": "You can't be in there!"
+                            },
+                            {
+                                "who": "npc2",
+                                "type": "walk",
+                                "direction": "right"
+                            },
+                            {
+                                "who": "hero",
+                                "type": "walk",
+                                "direction": "down"
+                            },
+                            {
+                                "who": "hero",
+                                "type": "walk",
+                                "direction": "left"
+                            }
+                        ]
+                    }
+                ],
+                "5,10": [
+                    {
+                        "events": [
+                            {
+                                "type": "changeMap",
+                                "map": "kitchen"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "name": "kitchen",
+            "lowerSrc": "assets/images/maps/KitchenLower.png",
+            "upperSrc": "assets/images/maps/KitchenUpper.png",
+            "gameObjects": [
+                {
+                    "name": "hero",
+                    "type": "person",
+                    "src": "assets/images/characters/people/hero.png",
+                    "isPlayerControlled": true,
+                    "x": 5,
+                    "y": 5
+                },
+                {
+                    "name": "npc3",
+                    "type": "person",
+                    "src": "assets/images/characters/people/npc3.png",
+                    "x": 10,
+                    "y": 8,
+                    "talking": [
+                        {
+                            "events": [
+                                {
+                                    "type": "textMessage",
+                                    "text": "You made it!",
+                                    "faceHero": "npc3"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
