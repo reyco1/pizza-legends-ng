@@ -1,5 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Overworld } from './game-objects/overworld';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +7,9 @@ import { Overworld } from './game-objects/overworld';
 })
 export class AppComponent {
 
-  @ViewChild('gameContainer')
-  gameContainer!: ElementRef<HTMLElement>;
+  public scale: number = 3;
+  public room: string = 'demoRoom';
 
-  ngAfterViewInit(): void {
-    const overworld: Overworld = new Overworld({ element: this.gameContainer.nativeElement });
-    overworld.init('demoRoom');
-  }
+  ngAfterViewInit(): void { }
 
 }

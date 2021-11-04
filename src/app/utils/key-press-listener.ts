@@ -6,6 +6,7 @@ export class KeyPressListener {
     constructor(keyCode: string, callback: Function) {
         let keySafe = true;
         this.keyDownFunction = function (event: any) {
+            // console.log('event.code ', event.code );
             if (event.code === keyCode) {
                 if (keySafe) {
                     keySafe = false;

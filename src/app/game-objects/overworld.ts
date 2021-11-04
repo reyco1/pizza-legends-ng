@@ -4,20 +4,20 @@ import { PERSON_WALKING_COMPLETE } from '../events/overworld-event';
 import { DirectionInput } from '../utils/direction-input';
 import { KeyPressListener } from '../utils/key-press-listener';
 import { MouseListener } from '../utils/mouse-listener';
+import { WallEditor } from '../utils/wall-editor';
 import { OverworldMap } from "./overworld-map";
 import { Person } from './person';
 
 export class Overworld {
 
-    private element: HTMLElement;
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     private map!: OverworldMap;
     private directionInput!: DirectionInput;
+    private wallEditor!: WallEditor;
 
     constructor(config: OverworldConfig) {
-        this.element = config.element;
-        this.canvas = this.element.querySelector('.game-canvas') as HTMLCanvasElement;
+        this.canvas = config.canvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }
 
@@ -27,9 +27,10 @@ export class Overworld {
         this.directionInput = new DirectionInput();
         this.directionInput.init();
 
-        this.bindActionInput();
+        this.wallEditor = new WallEditor({canvas: this.canvas, map: this.map});
+        this.wallEditor.init();
 
-        this.bindMousePress();
+        this.bindActionInput();
 
         this.bindHeroPositionCheck();
 
@@ -38,7 +39,6 @@ export class Overworld {
 
     startMap(roomName: string) {
         this.map = new OverworldMap(MapData.rooms.find(room => room.name === roomName) as Room);
-        this.map.showWalls = true;
         this.map.overworld = this;
         this.map.mountObjects();
     }
@@ -54,17 +54,10 @@ export class Overworld {
     bindActionInput() {
         new KeyPressListener('Enter', () => {
             this.map.checkForActionCutScene();
-        })
-    }
+        });
 
-    bindMousePress() {
-        new MouseListener(this.canvas, (e: any) => {
-            const bounds = this.canvas.getBoundingClientRect();
-            const scale = 3;
-            const x = (e.clientX - bounds.x) / scale;
-            const y = (e.clientY - bounds.y) / scale;
-            const remove = e.shiftKey
-            this.map.registerClick(x, y, remove);
+        new KeyPressListener('Digit1', () => {
+            this.wallEditor.showWalls = !this.wallEditor.showWalls;
         });
     }
 
@@ -89,7 +82,7 @@ export class Overworld {
 
             this.map.drawUpperImage(this.ctx, cameraPerson);
 
-            this.map.drawClickedTiles(this.ctx, cameraPerson);
+            this.wallEditor.update(this.ctx);
 
             requestAnimationFrame(() => step())
         }

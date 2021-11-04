@@ -1,5 +1,6 @@
 export interface OverworldConfig {
-    element: HTMLElement
+    element: HTMLElement,
+    canvas: HTMLCanvasElement
 }
 
 export interface Room {
