@@ -1,8 +1,9 @@
-import MapDataJson from '../../assets/data/maps.json';
+import MapData from 'src/assets/data/maps.json';
 import { OverworldConfig, Room } from "../dto/overworld-config.dto";
 import { PERSON_WALKING_COMPLETE } from '../events/overworld-event';
 import { DirectionInput } from '../utils/direction-input';
 import { KeyPressListener } from '../utils/key-press-listener';
+import { MouseListener } from '../utils/mouse-listener';
 import { OverworldMap } from "./overworld-map";
 import { Person } from './person';
 
@@ -20,13 +21,15 @@ export class Overworld {
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }
 
-    init() {
-        this.startMap('demoRoom')
+    init(roomName: string) {
+        this.startMap(roomName)
 
         this.directionInput = new DirectionInput();
         this.directionInput.init();
 
         this.bindActionInput();
+
+        this.bindMousePress();
 
         this.bindHeroPositionCheck();
 
@@ -34,14 +37,15 @@ export class Overworld {
     }
 
     startMap(roomName: string) {
-        this.map = new OverworldMap(MapDataJson.rooms.find(room => room.name === roomName) as Room);
+        this.map = new OverworldMap(MapData.rooms.find(room => room.name === roomName) as Room);
+        this.map.showWalls = true;
         this.map.overworld = this;
         this.map.mountObjects();
     }
 
     bindHeroPositionCheck() {
-        document.addEventListener(PERSON_WALKING_COMPLETE, (e: any) => {
-            if (e.detail.whoName === 'hero') {
+        document.addEventListener(PERSON_WALKING_COMPLETE, (evt: any) => {
+            if (evt.detail.whoName === 'hero') {
                 this.map.checkForFootstepCutScene();
             }
         });
@@ -51,6 +55,17 @@ export class Overworld {
         new KeyPressListener('Enter', () => {
             this.map.checkForActionCutScene();
         })
+    }
+
+    bindMousePress() {
+        new MouseListener(this.canvas, (e: any) => {
+            const bounds = this.canvas.getBoundingClientRect();
+            const scale = 3;
+            const x = (e.clientX - bounds.x) / scale;
+            const y = (e.clientY - bounds.y) / scale;
+            const remove = e.shiftKey
+            this.map.registerClick(x, y, remove);
+        });
     }
 
     startGameLoop(): void {
@@ -73,6 +88,8 @@ export class Overworld {
                 });
 
             this.map.drawUpperImage(this.ctx, cameraPerson);
+
+            this.map.drawClickedTiles(this.ctx, cameraPerson);
 
             requestAnimationFrame(() => step())
         }

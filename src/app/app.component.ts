@@ -13,7 +13,7 @@ export class AppComponent {
 
   ngAfterViewInit(): void {
     const overworld: Overworld = new Overworld({ element: this.gameContainer.nativeElement });
-    overworld.init();
+    overworld.init('demoRoom');
   }
 
 }

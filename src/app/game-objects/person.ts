@@ -1,9 +1,9 @@
-import { PADDING } from "../dto/game-object-config.dto";
-import { Behavior } from "../dto/overworld-config.dto";
-import { PERSON_STAND_COMPLETE, PERSON_WALKING_COMPLETE } from "../events/overworld-event";
-import { emitEvent } from "../utils/utilities";
-import { GameObject } from "./game-object";
-import { OverworldMap } from "./overworld-map";
+import { Behavior } from '../dto/overworld-config.dto';
+import { emitEvent } from '../utils/utilities';
+import { GameObject } from './game-object';
+import { OverworldMap } from './overworld-map';
+import { PADDING } from '../dto/game-object-config.dto';
+import { PERSON_STAND_COMPLETE, PERSON_WALKING_COMPLETE } from '../events/overworld-event';
 
 export class Person extends GameObject {
 
@@ -43,6 +43,7 @@ export class Person extends GameObject {
         } else {
             this.y += change;
         }
+        
         this.movingProgressRemaining -= 1;
 
         if (this.movingProgressRemaining === 0) {

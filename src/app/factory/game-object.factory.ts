@@ -1,7 +1,7 @@
 import { Behavior, GameObjectData } from "../dto/overworld-config.dto";
 import { GameObject } from "../game-objects/game-object";
 import { Person } from "../game-objects/person";
-import { asGridCoord, withGrid } from "../utils/utilities";
+import { asTileCoord, asGridCoord, withGrid } from "../utils/utilities";
 
 export class GameObjectFactory {
 
@@ -30,10 +30,10 @@ export class GameObjectFactory {
         return gameObjects;
     }
 
-    public static parseWalls(walls: { [key: string]: boolean }): { [key: string]: boolean } {
+    public static parseWalls(walls: { [key: string]: boolean }, asTileCoords: boolean = false): { [key: string]: boolean } {
         for (const key in walls) {
             if (Object.prototype.hasOwnProperty.call(walls, key)) {
-                walls[asGridCoord(key)] = true;
+                walls[asTileCoords ? asTileCoord(key) : asGridCoord(key)] = true;
                 delete walls[key];
             }
         }

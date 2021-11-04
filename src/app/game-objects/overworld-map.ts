@@ -1,7 +1,8 @@
+import { PADDING } from "../dto/game-object-config.dto";
 import { Behavior, Room } from "../dto/overworld-config.dto";
 import { OverworldEvent } from "../events/overworld-event";
 import { GameObjectFactory } from "../factory/game-object.factory";
-import { nextPosition, withGrid } from "../utils/utilities";
+import { asTileCoord, nextPosition, withGrid } from "../utils/utilities";
 import { GameObject } from "./game-object";
 import { Overworld } from "./overworld";
 import { Person } from "./person";
@@ -16,6 +17,7 @@ export class OverworldMap {
     public overworld: Overworld | null = null;
     public gameObjects: GameObject[];
     public cutScenePlaying: boolean = false;
+    public showWalls: boolean = false;;
 
     constructor(config: Room) {
         this.gameObjects = GameObjectFactory.createGameObjects(config.gameObjects);
@@ -28,6 +30,35 @@ export class OverworldMap {
 
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc;
+    }
+
+    registerClick(x: number, y: number, remove: boolean = false) {
+        if (this.showWalls) {
+            const cameraPerson = this.gameObjects.find(obj => obj.name === 'hero') as Person;
+            const xCoord = Math.floor((x - withGrid(10.5) + cameraPerson.x) / PADDING);
+            const yCoord = Math.floor((y - withGrid(6) + cameraPerson.y) / PADDING);
+            if (remove) {
+                this.removeWall(withGrid(xCoord), withGrid(yCoord));
+            } else {
+                this.addWall(withGrid(xCoord), withGrid(yCoord));
+            }
+        }
+    }
+
+    drawClickedTiles(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
+        if (this.showWalls) {
+            for (const key in this.walls) {
+                if (Object.prototype.hasOwnProperty.call(this.walls, key)) {
+                    const coordStr = asTileCoord(key);
+                    const [x, y] = coordStr.split(',').map(Number);
+                    ctx.fillStyle = '#ff000050';
+                    ctx.fillRect(
+                        withGrid(10.5) - cameraPerson.x + (x * PADDING),
+                        withGrid(6) - cameraPerson.y + (y * PADDING),
+                        PADDING, PADDING);
+                }
+            }
+        }
     }
 
     drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject): void {
@@ -53,7 +84,7 @@ export class OverworldMap {
         const hero = this.gameObjects.find(obj => obj.name === 'hero') as Person;
         const nextCoords = nextPosition(hero.x, hero.y, hero.direction);
         const match = this.gameObjects.find(obj => obj.x === nextCoords.x && obj.y === nextCoords.y);
-        if(!this.cutScenePlaying && match && match.talking.length > 0) {
+        if (!this.cutScenePlaying && match && match.talking.length > 0) {
             this.startCutScene(match.talking[0].events);
         }
     }
@@ -61,7 +92,7 @@ export class OverworldMap {
     checkForFootstepCutScene() {
         const hero = this.gameObjects.find(obj => obj.name === 'hero') as Person;
         const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
-        if(!this.cutScenePlaying && match) {
+        if (!this.cutScenePlaying && match) {
             this.startCutScene(match[0].events);
         }
     }

@@ -8,7 +8,7 @@
                 {
                     "name": "hero",
                     "type": "person",
-                    "src": "assets/images/characters/people/hero.png",
+                    "src": "assets/images/characters/people/pers1.png",
                     "isPlayerControlled": true,
                     "x": 5,
                     "y": 6

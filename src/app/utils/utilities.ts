@@ -4,9 +4,18 @@ export function withGrid(n: number): number {
     return n * PADDING;
 }
 
+export function asTile(n: number): number {
+    return n / PADDING;
+}
+
 export function asGridCoord(coord: string): string {
     const coords: number[] = coord.split(',').map(str => parseInt(str, 10));
-    return `${coords[0] * PADDING},${coords[1] * PADDING}`;
+    return `${withGrid(coords[0])},${withGrid(coords[1])}`;
+}
+
+export function asTileCoord(coord: string): string {
+    const coords: number[] = coord.split(',').map(str => parseInt(str, 10));
+    return `${asTile(coords[0])},${asTile(coords[1])}`;
 }
 
 export function nextPosition(initX: number, initY: number, direction: string) {
