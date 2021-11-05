@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Dongle&display=swap');
+
 :root {
     --border-color: #291d4d;
     --dialog-background: #fff3b4;
@@ -26,6 +28,7 @@ body {
     bottom: 0;
     height: 36px;
     font-size: 12px;
+    font-family: 'Dongle';
     padding: 4px;
     background: var(--menu-background);
     border-top: 1px solid var(--menu-border-color);
@@ -34,7 +37,16 @@ body {
 
 .text-message_p {
     margin: 0;
-    font-size: 12px;
+    font-size: 16px;
+    line-height: 14px;
+}
+
+.text-message_p span {
+    opacity: 0;
+}
+
+.text-message_p span.revealed {
+    opacity: 1;
 }
 
 .text-message_button {

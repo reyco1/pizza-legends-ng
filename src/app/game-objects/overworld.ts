@@ -27,7 +27,7 @@ export class Overworld {
         this.directionInput = new DirectionInput();
         this.directionInput.init();
 
-        this.wallEditor = new WallEditor({canvas: this.canvas, map: this.map});
+        this.wallEditor = new WallEditor({ canvas: this.canvas, map: this.map });
         this.wallEditor.init();
 
         this.bindActionInput();
