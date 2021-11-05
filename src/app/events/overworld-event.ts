@@ -2,6 +2,7 @@ import { oppositeDirection } from '../utils/utilities';
 import { OverworldMap } from '../game-objects/overworld-map';
 import { Person } from '../game-objects/person';
 import { TextMessage } from '../ui/text-message';
+import { SceneTransition } from '../ui/scene-transition';
 
 export const PERSON_WALKING_COMPLETE: string = 'person-walk-complete';
 export const PERSON_STAND_COMPLETE: string = 'person-stand-complete';
@@ -24,9 +25,15 @@ export class OverworldEvent {
     }
 
     changeMap(resolve: any) {
-        const mapName = this.event.map;
-        this.map.overworld?.startMap(mapName)
-        resolve();
+
+        const sceneTransition = new SceneTransition();
+        sceneTransition.init(document.querySelector('.game-container'), () => {
+            const mapName = this.event.map;
+            this.map.overworld?.startMap(mapName)
+            resolve();
+
+            sceneTransition.fadeOut()
+        });
     }
 
     textMessage(resolve: any) {
