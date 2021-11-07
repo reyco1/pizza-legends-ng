@@ -24,4 +24,7 @@ export class SceneTransition {
         this.element.classList.add('scene-transition');
     }
 
+
+
+
 }
