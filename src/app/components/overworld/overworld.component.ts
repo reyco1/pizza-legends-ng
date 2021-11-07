@@ -22,7 +22,8 @@ export class OverworldComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const overworld: Overworld = new Overworld({
       element: this.gameContainer.nativeElement,
-      canvas: this.gameCanvas.nativeElement
+      canvas: this.gameCanvas.nativeElement,
+      scale: this.scale,
     });
     overworld.init(this.room);
   }

@@ -15,10 +15,12 @@ export class Overworld {
     private map!: OverworldMap;
     private directionInput!: DirectionInput;
     private wallEditor!: WallEditor;
+    private scale!: number;
 
     constructor(config: OverworldConfig) {
         this.canvas = config.canvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
+        this.scale = config.scale || 3;
     }
 
     init(roomName: string) {
@@ -27,7 +29,7 @@ export class Overworld {
         this.directionInput = new DirectionInput();
         this.directionInput.init();
 
-        this.wallEditor = new WallEditor({ canvas: this.canvas, map: this.map });
+        this.wallEditor = new WallEditor({ canvas: this.canvas, map: this.map, scale: this.scale });
         this.wallEditor.init();
 
         this.bindActionInput();

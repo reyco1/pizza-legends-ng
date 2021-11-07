@@ -1,5 +1,4 @@
 import { PADDING } from "../dto/game-object-config.dto";
-import { GameObject } from "../game-objects/game-object";
 import { OverworldMap } from "../game-objects/overworld-map";
 import { Person } from "../game-objects/person";
 import { MouseListener } from "./mouse-listener";
@@ -11,18 +10,19 @@ export class WallEditor {
     public map: OverworldMap;
 
     private canvas: HTMLCanvasElement;
+    private scale: number;
 
     constructor(config: any) {
         this.canvas = config.canvas;
         this.map = config.map;
+        this.scale = config.scale;
     }
 
     init() {
         new MouseListener(this.canvas, (e: any) => {
             const bounds = this.canvas.getBoundingClientRect();
-            const scale = 3;
-            const x = (e.clientX - bounds.x) / scale;
-            const y = (e.clientY - bounds.y) / scale;
+            const x = (e.clientX - bounds.x) / this.scale;
+            const y = (e.clientY - bounds.y) / this.scale;
             const remove = e.shiftKey
             this.registerClick(x, y, remove);
         });
