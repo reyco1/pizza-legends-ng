@@ -8,9 +8,9 @@ import { asTileCoord, withGrid } from "./utilities";
 export class WallEditor {
 
     public showWalls: boolean = false;
+    public map: OverworldMap;
 
     private canvas: HTMLCanvasElement;
-    private map: OverworldMap;
 
     constructor(config: any) {
         this.canvas = config.canvas;

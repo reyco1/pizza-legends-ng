@@ -2,9 +2,11 @@
     position: relative;
     width: 352px;
     height: 198px;
+    top: 50%;
+    left: 50%;
     outline: 1px solid white;
-    margin: 0 auto;
-    transform: scale(3) translateY(50%);
+    transform-origin: top left;
+    transform: scale(3) translate(-50%, -55%);
 }
 
 .game-container canvas {

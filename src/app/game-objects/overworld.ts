@@ -41,6 +41,10 @@ export class Overworld {
         this.map = new OverworldMap(MapData.rooms.find(room => room.name === roomName) as Room);
         this.map.overworld = this;
         this.map.mountObjects();
+
+        if (this.wallEditor) {
+            this.wallEditor.map = this.map;
+        }
     }
 
     bindHeroPositionCheck() {
