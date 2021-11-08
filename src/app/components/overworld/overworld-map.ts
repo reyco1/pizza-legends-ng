@@ -1,10 +1,10 @@
-import { OverworldEvent } from "../events/overworld-event";
-import { GameObjectFactory } from "../factory/game-object.factory";
-import { Room, Behavior } from "../interfaces/room.interface";
-import { nextPosition, withGrid } from "../utils/utilities";
-import { GameObject } from "./game-object";
-import { Overworld } from "./overworld";
-import { Person } from "./person";
+import { OverworldEvent } from "../../events/overworld-event";
+import { GameObjectFactory } from "../../factory/game-object.factory";
+import { Room, Behavior } from "../../interfaces/room.interface";
+import { nextPosition, withGrid } from "../../utils/utilities";
+import { GameObject } from "../../game-objects/game-object";
+import { Person } from "../../game-objects/person";
+import { Overworld } from "src/app/factory/overworld";
 
 export class OverworldMap {
 

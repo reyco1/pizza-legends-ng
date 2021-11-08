@@ -1,3 +1,17 @@
+import { Injectable } from "@angular/core";
+
+@Injectable({providedIn: 'root'})
+export class KeyPressService {
+
+    constructor(){}
+
+    public addkeyPressListener(keyCode: string, callback: () => void): KeyPressListener {
+        return new KeyPressListener(keyCode, callback);
+    }
+
+}
+
+
 export class KeyPressListener {
 
     private keyDownFunction: any;

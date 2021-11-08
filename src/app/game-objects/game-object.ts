@@ -1,6 +1,6 @@
+import { OverworldMap } from '../components/overworld/overworld-map';
 import { OverworldEvent } from '../events/overworld-event';
 import { Behavior, Talking } from '../interfaces/room.interface';
-import { OverworldMap } from './overworld-map';
 import { Sprite } from './sprite';
 
 export class GameObject {

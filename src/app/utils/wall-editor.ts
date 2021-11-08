@@ -1,24 +1,26 @@
 import { PADDING } from "../config/game-config";
-import { OverworldMap } from "../game-objects/overworld-map";
+import { OverworldMap } from "../components/overworld/overworld-map";
 import { Person } from "../game-objects/person";
 import { MouseListener } from "./mouse-listener";
 import { asTileCoord, withGrid } from "./utilities";
+import { Injectable } from "@angular/core";
 
+@Injectable({providedIn: 'root'})
 export class WallEditor {
 
     public showWalls: boolean = false;
-    public map: OverworldMap;
+    public map!: OverworldMap;
 
-    private canvas: HTMLCanvasElement;
-    private scale: number;
+    private canvas!: HTMLCanvasElement;
+    private scale!: number;
 
-    constructor(config: any) {
+    constructor() { }
+
+    init(config: any) {
         this.canvas = config.canvas;
         this.map = config.map;
         this.scale = config.scale;
-    }
 
-    init() {
         new MouseListener(this.canvas, (e: any) => {
             const bounds = this.canvas.getBoundingClientRect();
             const x = (e.clientX - bounds.x) / this.scale;
@@ -47,7 +49,7 @@ export class WallEditor {
 
     private registerClick(x: number, y: number, remove: boolean = false) {
         if (this.showWalls) {
-            const cameraPerson = this.map.gameObjects.find(obj => obj.name === 'hero') as Person;
+            const cameraPerson = this.map.gameObjects.find((obj: any) => obj.name === 'hero') as Person;
             const xCoord = Math.floor((x - withGrid(10.5) + cameraPerson.x) / PADDING);
             const yCoord = Math.floor((y - withGrid(6) + cameraPerson.y) / PADDING);
             if (remove) {

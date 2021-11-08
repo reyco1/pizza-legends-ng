@@ -1,24 +1,29 @@
 import MapData from 'src/assets/data/maps.json';
-import { OverworldConfig } from '../config/game-config';
+import { DirectionInput } from 'src/app/utils/direction-input';
+import { KeyPressService } from 'src/app/utils/key-press-listener';
+import { OverworldConfig } from 'src/app/config/game-config';
+import { OverworldMap } from '../components/overworld/overworld-map';
+import { Person } from 'src/app/game-objects/person';
+import { PERSON_WALKING_COMPLETE } from 'src/app/events/overworld-event';
+import { Room } from 'src/app/interfaces/room.interface';
+import { WallEditor } from 'src/app/utils/wall-editor';
+import { Injectable } from '@angular/core';
 
-import { PERSON_WALKING_COMPLETE } from '../events/overworld-event';
-import { Room } from '../interfaces/room.interface';
-import { DirectionInput } from '../utils/direction-input';
-import { KeyPressListener } from '../utils/key-press-listener';
-import { WallEditor } from '../utils/wall-editor';
-import { OverworldMap } from "./overworld-map";
-import { Person } from './person';
-
+@Injectable({providedIn: 'root'})
 export class Overworld {
 
-    private canvas: HTMLCanvasElement;
-    private ctx: CanvasRenderingContext2D;
+    private canvas!: HTMLCanvasElement;
+    private ctx!: CanvasRenderingContext2D;
     private map!: OverworldMap;
-    private directionInput!: DirectionInput;
-    private wallEditor!: WallEditor;
     private scale!: number;
 
-    constructor(config: OverworldConfig) {
+    constructor(
+        private wallEditorService: WallEditor,
+        private directionInputService: DirectionInput,
+        private keyPressService: KeyPressService
+    ) { }
+
+    setConfig(config: OverworldConfig) {
         this.canvas = config.canvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
         this.scale = config.scale || 3;
@@ -27,11 +32,9 @@ export class Overworld {
     init(roomName: string) {
         this.startMap(roomName)
 
-        this.directionInput = new DirectionInput();
-        this.directionInput.init();
+        this.directionInputService.init();
 
-        this.wallEditor = new WallEditor({ canvas: this.canvas, map: this.map, scale: this.scale });
-        this.wallEditor.init();
+        this.wallEditorService.init({ canvas: this.canvas, map: this.map, scale: this.scale });
 
         this.bindActionInput();
 
@@ -45,8 +48,8 @@ export class Overworld {
         this.map.overworld = this;
         this.map.mountObjects();
 
-        if (this.wallEditor) {
-            this.wallEditor.map = this.map;
+        if (this.wallEditorService) {
+            this.wallEditorService.map = this.map;
         }
     }
 
@@ -59,25 +62,27 @@ export class Overworld {
     }
 
     bindActionInput() {
-        new KeyPressListener('Enter', () => {
+        this.keyPressService.addkeyPressListener('Enter', () => {
             this.map.checkForActionCutScene();
         });
 
-        new KeyPressListener('Digit1', () => {
-            this.wallEditor.showWalls = !this.wallEditor.showWalls;
+        this.keyPressService.addkeyPressListener('Digit1', () => {
+            this.wallEditorService.showWalls = !this.wallEditorService.showWalls;
         });
     }
 
     startGameLoop(): void {
+
         const step = () => {
 
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
             const cameraPerson = this.map.gameObjects.find(obj => obj.name === 'hero') as Person;
 
-            this.map.gameObjects.forEach(object => {
-                object.update({ arrow: this.directionInput.direction, map: this.map });
-            });
+            this.map.gameObjects
+                .forEach(object => {
+                    object.update({ arrow: this.directionInputService.direction, map: this.map });
+                });
 
             this.map.drawLowerImage(this.ctx, cameraPerson);
 
@@ -89,11 +94,13 @@ export class Overworld {
 
             this.map.drawUpperImage(this.ctx, cameraPerson);
 
-            this.wallEditor.update(this.ctx);
+            this.wallEditorService.update(this.ctx);
 
             requestAnimationFrame(() => step())
         }
+
         step();
     }
+
 
 }

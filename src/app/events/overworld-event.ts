@@ -1,8 +1,8 @@
 import { oppositeDirection } from '../utils/utilities';
-import { OverworldMap } from '../game-objects/overworld-map';
-import { Person } from '../game-objects/person';
+import { OverworldMap } from '../components/overworld/overworld-map';
 import { SceneTransition } from '../ui/scene-transition';
 import { TextMessage } from '../ui/text-message';
+import { Person } from '../game-objects/person';
 
 export const PERSON_WALKING_COMPLETE: string = 'person-walk-complete';
 export const PERSON_STAND_COMPLETE: string = 'person-stand-complete';
@@ -66,7 +66,7 @@ export class OverworldEvent {
     }
 
     walk(resolve: any) {
-        const who: Person = this.map.gameObjects.find(obj => obj.name === this.event.who) as Person;
+        const who: Person = this.map.gameObjects.find((obj: any) => obj.name === this.event.who) as Person;
         who.startBehavior({ map: this.map, arrow: '' }, { type: 'walk', direction: this.event.direction, retry: true });
 
         const completeHandler = (evt: any) => {

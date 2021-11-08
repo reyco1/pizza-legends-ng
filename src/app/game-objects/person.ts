@@ -1,9 +1,9 @@
 import { emitEvent } from '../utils/utilities';
 import { GameObject } from './game-object';
-import { OverworldMap } from './overworld-map';
 import { PERSON_STAND_COMPLETE, PERSON_WALKING_COMPLETE } from '../events/overworld-event';
 import { PADDING } from '../config/game-config';
 import { Behavior } from '../interfaces/room.interface';
+import { OverworldMap } from '../components/overworld/overworld-map';
 
 export class Person extends GameObject {
 

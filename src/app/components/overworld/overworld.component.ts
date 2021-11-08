@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Overworld } from 'src/app/game-objects/overworld';
+import { Overworld } from '../../factory/overworld';
 
 @Component({
   selector: 'overworld',
@@ -17,15 +17,17 @@ export class OverworldComponent implements AfterViewInit {
   @ViewChild('gameCanvas')
   gameCanvas!: ElementRef<HTMLCanvasElement>;
 
-  constructor() { }
+  constructor(
+    private overworldFactory: Overworld
+  ) { }
 
   ngAfterViewInit(): void {
-    const overworld: Overworld = new Overworld({
+    this.overworldFactory.setConfig({
       element: this.gameContainer.nativeElement,
       canvas: this.gameCanvas.nativeElement,
       scale: this.scale,
     });
-    overworld.init(this.room);
+    this.overworldFactory.init(this.room);
   }
 
 }
