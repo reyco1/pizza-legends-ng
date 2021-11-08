@@ -1,7 +1,8 @@
 import MapData from 'src/assets/data/maps.json';
+import { OverworldConfig } from '../config/game-config';
 
-import { OverworldConfig, Room } from "../dto/overworld-config.dto";
 import { PERSON_WALKING_COMPLETE } from '../events/overworld-event';
+import { Room } from '../interfaces/room.interface';
 import { DirectionInput } from '../utils/direction-input';
 import { KeyPressListener } from '../utils/key-press-listener';
 import { WallEditor } from '../utils/wall-editor';

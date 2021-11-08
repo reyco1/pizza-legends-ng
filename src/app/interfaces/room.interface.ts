@@ -1,9 +1,3 @@
-export interface OverworldConfig {
-    element: HTMLElement,
-    canvas: HTMLCanvasElement,
-    scale: number,
-}
-
 export interface Room {
     lowerSrc: string;
     upperSrc: string;
@@ -40,4 +34,3 @@ export interface TalkingEvent {
     text: string;
     faceHero?: string;
 }
-

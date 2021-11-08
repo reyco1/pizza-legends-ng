@@ -1,4 +1,4 @@
-import { OFFSET, PADDING, SpriteConfig, SQUARE_SIZE } from "../dto/game-object-config.dto";
+import { SpriteConfig, PADDING, OFFSET, SQUARE_SIZE } from "../config/game-config";
 import { withGrid } from "../utils/utilities";
 import { GameObject } from "./game-object";
 

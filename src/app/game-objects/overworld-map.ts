@@ -1,8 +1,7 @@
-import { PADDING } from "../dto/game-object-config.dto";
-import { Behavior, Room } from "../dto/overworld-config.dto";
 import { OverworldEvent } from "../events/overworld-event";
 import { GameObjectFactory } from "../factory/game-object.factory";
-import { asTileCoord, nextPosition, withGrid } from "../utils/utilities";
+import { Room, Behavior } from "../interfaces/room.interface";
+import { nextPosition, withGrid } from "../utils/utilities";
 import { GameObject } from "./game-object";
 import { Overworld } from "./overworld";
 import { Person } from "./person";

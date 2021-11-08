@@ -1,5 +1,5 @@
-import { Behavior, Talking } from '../dto/overworld-config.dto';
 import { OverworldEvent } from '../events/overworld-event';
+import { Behavior, Talking } from '../interfaces/room.interface';
 import { OverworldMap } from './overworld-map';
 import { Sprite } from './sprite';
 
@@ -17,6 +17,7 @@ export class GameObject {
     public talking: Talking[];
 
     constructor(config: any) {
+        this.sprite = new Sprite({ gameObject: this, src: config.src });
         this.name = config.name;
         this.x = config.x || 0;
         this.y = config.y || 0;
@@ -26,7 +27,6 @@ export class GameObject {
         this.talking = config.talking || [];
         this.isMouted = false;
         this.isStanding = false;
-        this.sprite = new Sprite({ gameObject: this, src: config.src });
     }
 
     mount(map: OverworldMap) {

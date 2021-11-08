@@ -1,4 +1,5 @@
-import { PADDING } from "../dto/game-object-config.dto";
+import { PADDING } from "../config/game-config";
+
 
 export function withGrid(n: number): number {
     return n * PADDING;

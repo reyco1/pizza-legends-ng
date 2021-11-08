@@ -1,4 +1,4 @@
-import { PADDING } from "../dto/game-object-config.dto";
+import { PADDING } from "../config/game-config";
 import { OverworldMap } from "../game-objects/overworld-map";
 import { Person } from "../game-objects/person";
 import { MouseListener } from "./mouse-listener";

@@ -1,6 +1,6 @@
-import { Behavior, GameObjectData } from "../dto/overworld-config.dto";
 import { GameObject } from "../game-objects/game-object";
 import { Person } from "../game-objects/person";
+import { GameObjectData, Behavior } from "../interfaces/room.interface";
 import { asTileCoord, asGridCoord, withGrid } from "../utils/utilities";
 
 export class GameObjectFactory {
