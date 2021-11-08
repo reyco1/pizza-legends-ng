@@ -1,5 +1,6 @@
 import MapData from 'src/assets/data/maps.json';
 import { DirectionInput } from 'src/app/utils/direction-input';
+import { Injectable } from '@angular/core';
 import { KeyPressService } from 'src/app/utils/key-press-listener';
 import { OverworldConfig } from 'src/app/config/game-config';
 import { OverworldMap } from '../components/overworld/overworld-map';
@@ -7,7 +8,6 @@ import { Person } from 'src/app/game-objects/person';
 import { PERSON_WALKING_COMPLETE } from 'src/app/events/overworld-event';
 import { Room } from 'src/app/interfaces/room.interface';
 import { WallEditor } from 'src/app/utils/wall-editor';
-import { Injectable } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class Overworld {

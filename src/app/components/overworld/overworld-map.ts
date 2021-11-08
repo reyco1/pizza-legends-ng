@@ -45,9 +45,7 @@ export class OverworldMap {
     }
 
     mountObjects() {
-        this.gameObjects.forEach(obj => {
-            obj.mount(this)
-        });
+        this.gameObjects.forEach(obj => obj.mount(this));
     }
 
     checkForActionCutScene() {
@@ -72,10 +70,7 @@ export class OverworldMap {
 
         for (let index = 0; index < events.length; index++) {
             const behavioir: Behavior = events[index];
-            const eventHandler = new OverworldEvent({
-                map: this,
-                event: behavioir
-            });
+            const eventHandler = new OverworldEvent({ map: this, event: behavioir });
             await eventHandler.init();
         }
 
