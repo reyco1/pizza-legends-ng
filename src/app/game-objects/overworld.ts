@@ -3,6 +3,7 @@ import MapData from 'src/assets/data/maps.json';
 import { OverworldConfig, Room } from "../dto/overworld-config.dto";
 import { PERSON_WALKING_COMPLETE } from '../events/overworld-event';
 import { DirectionInput } from '../utils/direction-input';
+import { GameLoop } from '../utils/game-loop';
 import { KeyPressListener } from '../utils/key-press-listener';
 import { WallEditor } from '../utils/wall-editor';
 import { OverworldMap } from "./overworld-map";
@@ -13,6 +14,7 @@ export class Overworld {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
     private map!: OverworldMap;
+    private gameLoop!: GameLoop;
     private directionInput!: DirectionInput;
     private wallEditor!: WallEditor;
     private scale!: number;
@@ -36,7 +38,10 @@ export class Overworld {
 
         this.bindHeroPositionCheck();
 
-        this.startGameLoop();
+        this.gameLoop = new GameLoop(60, () => { this.step(); });
+        this.gameLoop.start();
+
+        this.map.startCutScene([ { type: 'battle' }])
     }
 
     startMap(roomName: string) {
@@ -67,32 +72,26 @@ export class Overworld {
         });
     }
 
-    startGameLoop(): void {
-        const step = () => {
+    step(): void {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const cameraPerson = this.map.gameObjects.find(obj => obj.name === 'hero') as Person;
 
-            const cameraPerson = this.map.gameObjects.find(obj => obj.name === 'hero') as Person;
+        this.map.gameObjects.forEach(object => {
+            object.update({ arrow: this.directionInput.direction, map: this.map });
+        });
 
-            this.map.gameObjects.forEach(object => {
-                object.update({ arrow: this.directionInput.direction, map: this.map });
+        this.map.drawLowerImage(this.ctx, cameraPerson);
+
+        this.map.gameObjects
+            .sort((a, b) => a.y - b.y)
+            .forEach(object => {
+                object.sprite.draw(this.ctx, cameraPerson);
             });
 
-            this.map.drawLowerImage(this.ctx, cameraPerson);
+        this.map.drawUpperImage(this.ctx, cameraPerson);
 
-            this.map.gameObjects
-                .sort((a, b) => a.y - b.y)
-                .forEach(object => {
-                    object.sprite.draw(this.ctx, cameraPerson);
-                });
-
-            this.map.drawUpperImage(this.ctx, cameraPerson);
-
-            this.wallEditor.update(this.ctx);
-
-            requestAnimationFrame(() => step())
-        }
-        step();
+        this.wallEditor.update(this.ctx);
     }
 
 }

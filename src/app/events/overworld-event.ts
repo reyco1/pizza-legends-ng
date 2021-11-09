@@ -3,6 +3,7 @@ import { OverworldMap } from '../game-objects/overworld-map';
 import { Person } from '../game-objects/person';
 import { TextMessage } from '../ui/text-message';
 import { SceneTransition } from '../ui/scene-transition';
+import { Battle } from '../ui/battle/battle';
 
 export const PERSON_WALKING_COMPLETE: string = 'person-walk-complete';
 export const PERSON_STAND_COMPLETE: string = 'person-stand-complete';
@@ -22,6 +23,11 @@ export class OverworldEvent {
             const eventType: string = this.event.type;
             this[eventType as keyof OverworldEvent](resolve)
         });
+    }
+
+    battle(resolver: any) {
+        const battle = new Battle({ onComplete: () => resolver() });
+        battle.init(document.querySelector('.game-container') as HTMLElement);
     }
 
     changeMap(resolve: any) {

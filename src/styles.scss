@@ -87,3 +87,43 @@ body {
     from { opacity: 1; }    
     to { opacity: 0; }
 }
+
+
+
+.battle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url('assets/images/maps/StreetBattle.png');
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+.battle-hero, .battle-enemy {
+    position: absolute;
+    transform: scale(2);
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    background: url('assets/images/characters/shadow.png')
+}
+
+.battle-hero img, .battle-enemy img {
+    pointer-events: none;
+}
+
+.battle-hero {
+    bottom: 57px;
+    left: 1px;
+}
+
+.battle-hero img {
+    transform: translateY(-64px);
+}
+
+.battle-enemy {
+    top: 42px;
+    right: -1px;
+}
