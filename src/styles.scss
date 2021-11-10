@@ -79,13 +79,23 @@ body {
 }
 
 @keyframes scene-transition-fade-in {
-    from { opacity: 0; }    
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes scene-transition-fade-out {
-    from { opacity: 1; }    
-    to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 
@@ -101,7 +111,8 @@ body {
     image-rendering: pixelated;
 }
 
-.battle-hero, .battle-enemy {
+.battle-hero,
+.battle-enemy {
     position: absolute;
     transform: scale(2);
     width: 32px;
@@ -110,7 +121,8 @@ body {
     background: url('assets/images/characters/shadow.png')
 }
 
-.battle-hero img, .battle-enemy img {
+.battle-hero img,
+.battle-enemy img {
     pointer-events: none;
 }
 
@@ -126,4 +138,155 @@ body {
 .battle-enemy {
     top: 42px;
     right: -1px;
+}
+
+
+
+.combatant {
+    width: 67px;
+    height: 14px;
+    background: url("assets/images/ui/combatant-plate.png") no-repeat no-repeat;
+    position: absolute;
+}
+
+.combatant[data-team="player"] {
+    top: 70px;
+    left: 50px;
+}
+
+.combatant[data-team="enemy"] {
+    top: 28px;
+    right: 77px;
+}
+
+.combatant-character-crop {
+    position: absolute;
+    bottom: 1px;
+    left: 3px;
+    width: 22px;
+    height: 12px;
+    overflow: hidden;
+}
+
+.combatant-character {
+    display: block;
+    position: absolute;
+    left: -11px;
+    bottom: -7px;
+}
+
+.combatant-name {
+    position: absolute;
+    left: -2px;
+    top: -8px;
+    white-space: nowrap;
+    background: var(--menu-font-color);
+    color: white;
+    font-size: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0;
+}
+
+.combatant-type {
+    position: absolute;
+    left: 3px;
+    top: -2px;
+    width: 16px;
+    height: 16px;
+}
+
+.combatant-life-container {
+    position: absolute;
+    left: 20px;
+    top: 4px;
+    width: 26px;
+    height: 3px;
+}
+
+.combatant-life-container>rect {
+    transition: width 0.2s ease-in-out;
+}
+
+.combatant-xp-container {
+    position: absolute;
+    left: 20px;
+    top: 8px;
+    width: 26px;
+    height: 2px;
+}
+
+.combatant-level {
+    position: absolute;
+    font-size: 12px;
+    right: 2px;
+    top: -1px;
+    width: 17px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8c594;
+    border: 1px solid #a48465;
+    margin: 0;
+}
+
+.combatant-status {
+    position: absolute;
+    font-size: 5px;
+    left: 47px;
+    bottom: -3px;
+    padding-left: 2px;
+    padding-right: 2px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    margin: 0;
+}
+
+.combatant-status[data-status="saucy"] {
+    color: red;
+}
+
+.combatant-status[data-status="clumsy"] {
+    color: #582a79;
+}
+
+.battle .combatant-character-crop {
+    display: none;
+}
+
+.battle .combatant {
+    transform: scale(2);
+}
+
+.battle .combatant[data-active="false"] {
+    opacity: 0;
+}
+
+.battle .combatant[data-active="true"] {
+    opacity: 1;
+}
+
+.pizza {
+    position: absolute;
+    transform: scale(2);
+    background: url('./assets/images/characters/pizzas/pizza-shadow.png') no-repeat no-repeat;
+}
+
+.pizza[data-team="player"] {
+    bottom: 73px;
+    left: 51px;
+}
+
+.pizza[data-team="enemy"] {
+    top: 47px;
+    right: 100px;
+}
+
+.pizza[data-active="false"] {
+    opacity: 0;
+}
+
+.pizza[data-active="true"] {
+    opacity: 1;
 }

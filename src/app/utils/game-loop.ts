@@ -16,7 +16,7 @@ export class GameLoop {
     public start(): void {
         this.running = true;
         this.secondsPassed = Date.now();
-        this.loop(0)
+        this.loop(this.secondsPassed)
     }
 
     public stop(): void {
@@ -37,7 +37,7 @@ export class GameLoop {
         this.oldTimeStamp = timeStamp;
 
         // Calculate fps
-        this.fps = Math.round(1 / this.secondsPassed);
+        this.fps = 1 / this.secondsPassed;
 
         // Perform the drawing operation
         this.callback();

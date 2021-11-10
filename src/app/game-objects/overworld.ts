@@ -34,12 +34,12 @@ export class Overworld {
         this.wallEditor = new WallEditor({ canvas: this.canvas, map: this.map, scale: this.scale });
         this.wallEditor.init();
 
+        this.gameLoop = new GameLoop(60, () => { this.step(); });
+        this.gameLoop.start();
+
         this.bindActionInput();
 
         this.bindHeroPositionCheck();
-
-        this.gameLoop = new GameLoop(60, () => { this.step(); });
-        this.gameLoop.start();
 
         this.map.startCutScene([ { type: 'battle' }])
     }
