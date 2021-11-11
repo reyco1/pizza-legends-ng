@@ -1,4 +1,4 @@
-import { PADDING } from "../dto/game-object-config.dto";
+import { HALF_HORIZONTAL_TILES, HALF_VERTICAL_TILES, PADDING } from "../dto/game-object-config.dto";
 import { OverworldMap } from "../game-objects/overworld-map";
 import { Person } from "../game-objects/person";
 import { MouseListener } from "./mouse-listener";
@@ -37,8 +37,8 @@ export class WallEditor {
                     const [x, y] = coordStr.split(',').map(Number);
                     ctx.fillStyle = '#ff000050';
                     ctx.fillRect(
-                        withGrid(10.5) - cameraPerson.x + (x * PADDING),
-                        withGrid(6) - cameraPerson.y + (y * PADDING),
+                        withGrid(HALF_HORIZONTAL_TILES) - cameraPerson.x + (x * PADDING),
+                        withGrid(HALF_VERTICAL_TILES) - cameraPerson.y + (y * PADDING),
                         PADDING, PADDING);
                 }
             }
@@ -48,8 +48,8 @@ export class WallEditor {
     private registerClick(x: number, y: number, remove: boolean = false) {
         if (this.showWalls) {
             const cameraPerson = this.map.gameObjects.find(obj => obj.name === 'hero') as Person;
-            const xCoord = Math.floor((x - withGrid(10.5) + cameraPerson.x) / PADDING);
-            const yCoord = Math.floor((y - withGrid(6) + cameraPerson.y) / PADDING);
+            const xCoord = Math.floor((x - withGrid(HALF_HORIZONTAL_TILES) + cameraPerson.x) / PADDING);
+            const yCoord = Math.floor((y - withGrid(HALF_VERTICAL_TILES) + cameraPerson.y) / PADDING);
             if (remove) {
                 this.map.removeWall(withGrid(xCoord), withGrid(yCoord));
             } else {

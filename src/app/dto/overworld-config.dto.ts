@@ -18,6 +18,7 @@ export interface GameObjectData {
     src: string;
     x: number;
     y: number;
+    direction?: string;
     isPlayerControlled?: boolean;
     behaviorLoop?: Behavior[];
     talking?: Talking[];

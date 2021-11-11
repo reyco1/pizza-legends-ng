@@ -1,4 +1,4 @@
-import { Behavior } from '../dto/overworld-config.dto';
+import { Behavior, GameObjectData } from '../dto/overworld-config.dto';
 import { emitEvent } from '../utils/utilities';
 import { GameObject } from './game-object';
 import { OverworldMap } from './overworld-map';
@@ -12,7 +12,7 @@ export class Person extends GameObject {
     private movingProgressRemaining: number = 0;
     private directionUpdate: { [key: string]: any[] }
 
-    constructor(config: any) {
+    constructor(config: GameObjectData) {
         super(config);
         this.isPlayerControlled = config.isPlayerControlled || false;
         this.movingProgressRemaining = 0;

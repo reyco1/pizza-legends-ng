@@ -11,4 +11,5 @@ export interface CombatantConfig {
     type: string;
     src: string;
     icon: string;
+    actions: string[];
 }

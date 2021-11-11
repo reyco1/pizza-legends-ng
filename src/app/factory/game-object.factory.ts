@@ -7,6 +7,17 @@ export class GameObjectFactory {
 
     private static gameObjects: { name: string, gameObject: GameObject }[] = [];
 
+    public static getGameObject(name: string): GameObject | Person | undefined {
+        return this.gameObjects.find(gameObject => gameObject.name === name)?.gameObject;
+    }
+
+    public static removeGameObject(name: string) {
+        const index = this.gameObjects.findIndex(gameObject => gameObject.name === name);
+        if (index > -1) {
+            this.gameObjects.splice(index, 1);
+        }
+    }
+
     public static createGameObject(gameObjectData: GameObjectData): GameObject | Person {
         let gameObjectDto = GameObjectFactory.gameObjects.find(obj => obj.name === gameObjectData.name);
         gameObjectData.x = withGrid(gameObjectData.x);

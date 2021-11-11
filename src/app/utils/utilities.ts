@@ -9,13 +9,13 @@ export function asTile(n: number): number {
 }
 
 export function asGridCoord(coord: string): string {
-    const coords: number[] = coord.split(',').map(str => parseInt(str, 10));
-    return `${withGrid(coords[0])},${withGrid(coords[1])}`;
+    const [x, y] = coord.split(',').map(str => parseInt(str, 10));
+    return `${withGrid(x)},${withGrid(y)}`;
 }
 
 export function asTileCoord(coord: string): string {
-    const coords: number[] = coord.split(',').map(str => parseInt(str, 10));
-    return `${asTile(coords[0])},${asTile(coords[1])}`;
+    const [x, y] = coord.split(',').map(str => parseInt(str, 10));
+    return `${asTile(x)},${asTile(y)}`;
 }
 
 export function nextPosition(initX: number, initY: number, direction: string) {
@@ -58,4 +58,8 @@ export function oppositeDirection(direction: string) {
         default:
             return 'left'
     }
+}
+
+export function wait(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

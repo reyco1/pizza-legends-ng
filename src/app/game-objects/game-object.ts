@@ -1,4 +1,4 @@
-import { Behavior, Talking } from '../dto/overworld-config.dto';
+import { Behavior, GameObjectData, Talking } from '../dto/overworld-config.dto';
 import { OverworldEvent } from '../events/overworld-event';
 import { OverworldMap } from './overworld-map';
 import { Sprite } from './sprite';
@@ -16,7 +16,7 @@ export class GameObject {
     public behaviorLoopIndex: number;
     public talking: Talking[];
 
-    constructor(config: any) {
+    constructor(config: GameObjectData) {
         this.name = config.name;
         this.x = config.x || 0;
         this.y = config.y || 0;

@@ -31,19 +31,16 @@ export class OverworldEvent {
     }
 
     changeMap(resolve: any) {
-
         const sceneTransition = new SceneTransition();
         sceneTransition.init(document.querySelector('.game-container'), () => {
             const mapName = this.event.map;
             this.map.overworld?.startMap(mapName)
-            resolve();
-
             sceneTransition.fadeOut()
+            resolve();
         });
     }
 
     textMessage(resolve: any) {
-
         if (this.event.faceHero) {
             const npc: Person = this.map.gameObjects.find(obj => obj.name === this.event.faceHero) as Person;
             const hero: Person = this.map.gameObjects.find(obj => obj.name === 'hero') as Person;

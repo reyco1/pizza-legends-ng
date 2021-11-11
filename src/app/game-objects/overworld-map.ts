@@ -1,4 +1,4 @@
-import { PADDING } from "../dto/game-object-config.dto";
+import { HALF_HORIZONTAL_TILES, HALF_VERTICAL_TILES, PADDING } from "../dto/game-object-config.dto";
 import { Behavior, Room } from "../dto/overworld-config.dto";
 import { OverworldEvent } from "../events/overworld-event";
 import { GameObjectFactory } from "../factory/game-object.factory";
@@ -33,11 +33,11 @@ export class OverworldMap {
     }
 
     drawLowerImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject): void {
-        ctx.drawImage(this.lowerImage, withGrid(10.5) - cameraPerson.x, withGrid(6) - cameraPerson.y);
+        ctx.drawImage(this.lowerImage, withGrid(HALF_HORIZONTAL_TILES) - cameraPerson.x, withGrid(HALF_VERTICAL_TILES) - cameraPerson.y);
     }
 
     drawUpperImage(ctx: CanvasRenderingContext2D, cameraPerson: GameObject): void {
-        ctx.drawImage(this.upperImage, withGrid(10.5) - cameraPerson.x, withGrid(6) - cameraPerson.y);
+        ctx.drawImage(this.upperImage, withGrid(HALF_HORIZONTAL_TILES) - cameraPerson.x, withGrid(HALF_VERTICAL_TILES) - cameraPerson.y);
     }
 
     isSpaceTaken(currX: number, currY: number, direction: string) {

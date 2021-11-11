@@ -1,4 +1,4 @@
-import { OFFSET, PADDING, SpriteConfig, SQUARE_SIZE } from "../dto/game-object-config.dto";
+import { HALF_HORIZONTAL_TILES, HALF_VERTICAL_TILES, OFFSET, PADDING, SQUARE_SIZE } from "../dto/game-object-config.dto";
 import { withGrid } from "../utils/utilities";
 import { GameObject } from "./game-object";
 
@@ -9,7 +9,7 @@ export class Sprite {
     private gameObject: GameObject;
     private isLoaded: boolean = false;
     private isShadowLoaded: boolean = false;
-    private useShadow: boolean = false;
+    private useShadow: boolean = true;
     private animations: any;
     private currentAnimation: string;
     private currentAnimationFrame: number;
@@ -23,7 +23,7 @@ export class Sprite {
             this.isLoaded = true;
         }
 
-        this.useShadow = true;
+        this.useShadow = config.useShadow ?? true;
         this.shadow = new Image();
         if (this.useShadow) {
             this.shadow.src = 'assets/images/characters/shadow.png';
@@ -81,8 +81,8 @@ export class Sprite {
     }
 
     draw(ctx: CanvasRenderingContext2D, cameraPerson: GameObject): void {
-        const x = this.gameObject.x - OFFSET.x + withGrid(10.5) - cameraPerson.x;
-        const y = this.gameObject.y - OFFSET.y + withGrid(6) - cameraPerson.y;
+        const x = this.gameObject.x - OFFSET.x + withGrid(HALF_HORIZONTAL_TILES) - cameraPerson.x;
+        const y = this.gameObject.y - OFFSET.y + withGrid(HALF_VERTICAL_TILES) - cameraPerson.y;
 
         this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
 
@@ -98,4 +98,15 @@ export class Sprite {
 
         this.updateAnimationProgress();
     }
+}
+
+export interface SpriteConfig {
+    gameObject: GameObject;
+    src: string;
+    currentAnimation?: string;
+    animations?: any;
+    useShadow?: boolean;
+    currentAnimationFrame?: number;
+    animationFrameLimit?: number;
+    animationFrameProgress?: number;
 }
